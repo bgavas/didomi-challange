@@ -1,0 +1,24 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended",
+    "tslint-config-prettier",
+    "tslint-config-airbnb"
+  ],
+  "jsRules": {},
+  "rules": {
+    "no-unused-expression": true,
+    "no-unused-variable": true,
+    "import-name": [
+      true,
+      {
+        "mail": "sg",
+        "lodash": "_",
+        "bull": "Queue",
+        "winstonSlackWebhookTransport": "WinstonSlackHook",
+        "pQueue": "PQueue"
+      }
+    ]
+  },
+  "rulesDirectory": []
+}
