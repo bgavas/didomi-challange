@@ -3,6 +3,7 @@ import { HttpError, NotFoundError } from 'routing-controllers';
 import { Service } from 'typedi';
 import { getCustomRepository } from 'typeorm';
 import { User } from '../../db/entities/user.entity';
+import { errors } from '../../utils/errors';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserRepository } from './user.repository';
 
@@ -16,14 +17,14 @@ export class UserService {
 
     // Throw error if email is not unique
     if (!isEmailValid) {
-      throw new HttpError(422, 'Please provide a valid email');
+      throw new HttpError(422, errors.PROVIDE_A_VALID_URL);
     }
 
     // Check if there is already a user with the same email
     const duplicateUser = await this.userRepository.getByEmail(dto.email);
     // Throw error if email is not unique
     if (duplicateUser) {
-      throw new HttpError(422, 'A user with this email already exists');
+      throw new HttpError(422, errors.USER_WITH_THIS_EMAIL_EXISTS);
     }
 
     // Create user
@@ -36,7 +37,7 @@ export class UserService {
 
     // Throw error if user not found
     if (!user) {
-      throw new NotFoundError('No user is found with this id');
+      throw new NotFoundError(errors.USER_NOT_FOUND);
     }
 
     return user;
@@ -52,7 +53,7 @@ export class UserService {
 
     // Throw error if user not found
     if (!user) {
-      throw new NotFoundError('No user is found with this id');
+      throw new NotFoundError(errors.USER_NOT_FOUND);
     }
 
     // Delete user

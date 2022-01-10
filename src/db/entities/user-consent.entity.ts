@@ -11,8 +11,8 @@ import { User } from './user.entity';
 
 @Entity()
 export class UserConsent extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   enabled: boolean;
