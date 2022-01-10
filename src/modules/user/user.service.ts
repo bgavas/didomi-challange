@@ -20,7 +20,7 @@ export class UserService {
     }
 
     // Check if there is already a user with the same email
-    const duplicateUser = await this.getUserByEmail(dto.email);
+    const duplicateUser = await this.userRepository.getByEmail(dto.email);
     // Throw error if email is not unique
     if (duplicateUser) {
       throw new HttpError(422, 'A user with this email already exists');
@@ -28,10 +28,6 @@ export class UserService {
 
     // Create user
     return this.userRepository.createUser(dto);
-  }
-
-  async getUserByEmail(email: string): Promise<User | undefined> {
-    return this.userRepository.getByEmail(email);
   }
 
   async getUserById(id: string): Promise<User> {

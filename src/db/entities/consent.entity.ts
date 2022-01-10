@@ -1,10 +1,8 @@
 import {
   BaseEntity,
-  Column,
   Entity,
   OneToMany,
   PrimaryColumn,
-  Unique,
 } from 'typeorm';
 import { UserConsent } from './user-consent.entity';
 
