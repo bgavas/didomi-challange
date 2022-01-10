@@ -1,5 +1,5 @@
 import { isEmail } from 'class-validator';
-import { HttpError } from 'routing-controllers';
+import { HttpError, NotFoundError } from 'routing-controllers';
 import { Service } from 'typedi';
 import { getCustomRepository } from 'typeorm';
 import { User } from '../../db/entities/user.entity';
@@ -32,5 +32,21 @@ export class UserService {
 
   async getUserByEmail(email: string): Promise<User | undefined> {
     return this.userRepository.getByEmail(email);
+  }
+
+  async getUserById(id: string): Promise<User> {
+    // Get user by id
+    const user = await this.userRepository.getById(id);
+
+    // Throw error if user not found
+    if (!user) {
+      throw new NotFoundError('No user is found with this id');
+    }
+
+    return user;
+  }
+
+  async getUsers(): Promise<User[]> {
+    return this.userRepository.getUsers();
   }
 }

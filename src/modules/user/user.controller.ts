@@ -1,4 +1,4 @@
-import { Body, JsonController, Post } from 'routing-controllers';
+import { Body, Get, JsonController, Param, Post } from 'routing-controllers';
 import { OpenAPI } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
 import { User } from '../../db/entities/user.entity';
@@ -18,5 +18,17 @@ export class UserController {
     @Body() dto: CreateUserDto,
   ): Promise<User> {
     return this.userService.createUser(dto);
+  }
+
+  @Get('/:id')
+  async getUser(
+    @Param('id') id: string,
+  ): Promise<User> {
+    return this.userService.getUserById(id);
+  }
+
+  @Get('/')
+  async getUsers(): Promise<User[]> {
+    return this.userService.getUsers();
   }
 }

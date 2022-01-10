@@ -19,4 +19,10 @@ export class UserRepository extends Repository<User> {
   async getByEmail(email: string): Promise<User | undefined> {
     return this.findOne({ email });
   }
+
+  async getUsers(): Promise<User[]> {
+    return this.createQueryBuilder('u')
+      .leftJoinAndSelect('u.consents', 'c')
+      .getMany();
+  }
 }
