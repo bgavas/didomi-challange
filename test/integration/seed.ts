@@ -11,7 +11,11 @@ export class Seed {
     this.users = [
       User.create({
         id: v4(),
-        email: 'burak@gmail.com',
+        email: 'john@gmail.com',
+      }),
+      User.create({
+        id: v4(),
+        email: 'may@gmail.com',
       }),
     ];
   }

@@ -1,14 +1,14 @@
 import supertest from 'supertest';
 import { Container } from 'typedi';
 import { getConnection } from 'typeorm';
-import { User } from '../../../src/db/entities/user.entity';
+import { v4 } from 'uuid';
 import { CreateUserDto } from '../../../src/modules/user/dto/create-user.dto';
 import { AppServer } from '../../../src/server';
 import { errors } from '../../../src/utils/errors';
 import { createDbConnection } from '../helper';
 import { Seed } from '../seed';
 
-const path = () => '/api/users';
+const path = (id: string) => `/api/users/${id}`;
 let seed: Seed;
 let appServer: AppServer;
 let app: Express.Application;
@@ -31,54 +31,31 @@ beforeEach(async () => {
 });
 
 describe('User', () => {
-  describe('createUser', () => {
-    it('should create a user', async () => {
-      const body: CreateUserDto = {
-        email: 'dummy@test.com',
-      };
+  describe('getUser', () => {
+    it('should get a user', async () => {
+      const user = seed.users[0];
 
       const response = await supertest(app)
-        .post(path())
-        .send(body)
+        .get(path(user.id))
         .expect(200);
 
       const usr = response.body;
-      expect(body.email).toBe(usr.email);
-
-      // Check if user created
-      const [user] = await Promise.all([
-        User.findOne({
-          ...body,
-        }),
-      ]);
-
-      if (!user) throw new Error('User not saved to the DB');
+      expect(usr.email).toBe(user.email);
+      expect(usr.id).toBe(user.id);
+      expect(usr.consents).toHaveLength(0);
     });
 
-    it('should not create a user if email is malformed', async () => {
-      const body: CreateUserDto = {
-        email: 'dummy',
-      };
-
-      const response = await supertest(app)
-        .post(path())
-        .send(body)
-        .expect(422);
-
-      expect(response.body.message).toBe(errors.PROVIDE_A_VALID_URL);
-    });
-
-    it('should not create a user if email already exists', async () => {
+    it('should not get a user if user not exists', async () => {
       const body: CreateUserDto = {
         email: seed.users[0].email,
       };
 
       const response = await supertest(app)
-        .post(path())
+        .get(path(v4()))
         .send(body)
-        .expect(422);
+        .expect(404);
 
-      expect(response.body.message).toBe(errors.USER_WITH_THIS_EMAIL_EXISTS);
+      expect(response.body.message).toBe(errors.USER_NOT_FOUND);
     });
   });
 });
