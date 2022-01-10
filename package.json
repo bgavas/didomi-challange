@@ -14,12 +14,8 @@
     "start:dev": "nodemon src/index.ts",
     "dev": "ts-node ./src/",
     "test": "jest",
-    "test-dto": "jest --testPathPattern=test/dto/ --runInBand",
-    "test-e2e": "jest --testPathPattern=test/e2e/ --runInBand",
     "test:cov": "jest --collect-coverage",
-    "lint": "tslint -p tsconfig.json -c tslint.json",
-    "seed:config": "ts-node ./node_modules/typeorm-seeding/dist/cli.js config",
-    "seed:run": "ts-node ./node_modules/typeorm-seeding/dist/cli.js seed"
+    "lint": "tslint -p tsconfig.json -c tslint.json"
   },
   "dependencies": {
     "class-transformer": "^0.5.1",

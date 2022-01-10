@@ -2,6 +2,7 @@ import supertest from 'supertest';
 import { Container } from 'typedi';
 import { getConnection } from 'typeorm';
 import { v4 } from 'uuid';
+import { User } from '../../../src/db/entities/user.entity';
 import { CreateUserDto } from '../../../src/modules/user/dto/create-user.dto';
 import { AppServer } from '../../../src/server';
 import { errors } from '../../../src/utils/errors';
@@ -31,28 +32,27 @@ beforeEach(async () => {
 });
 
 describe('User', () => {
-  describe('getUser', () => {
-    it('should get a user', async () => {
-      const user = seed.users[0];
+  describe('deleteUser', () => {
+    it('should delete a user', async () => {
+      const usr = seed.users[0];
 
-      const response = await supertest(app)
-        .get(path(user.id))
+      await supertest(app)
+        .delete(path(usr.id))
         .expect(200);
 
-      const usr = response.body;
-      expect(usr.email).toBe(user.email);
-      expect(usr.id).toBe(user.id);
-      expect(usr.consents).toHaveLength(0);
+      // Check if user created
+      const [user] = await Promise.all([
+        User.findOne({
+          id: usr.id,
+        }),
+      ]);
+
+      if (user) throw new Error('User not deleted from the DB');
     });
 
-    it('should not get a user if user not found', async () => {
-      const body: CreateUserDto = {
-        email: seed.users[0].email,
-      };
-
+    it('should not delete a user if user not found', async () => {
       const response = await supertest(app)
-        .get(path(v4()))
-        .send(body)
+        .delete(path(v4()))
         .expect(404);
 
       expect(response.body.message).toBe(errors.USER_NOT_FOUND);

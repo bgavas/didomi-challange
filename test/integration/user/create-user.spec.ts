@@ -44,6 +44,7 @@ describe('User', () => {
 
       const usr = response.body;
       expect(body.email).toBe(usr.email);
+      expect(usr.consents).toHaveLength(0);
 
       // Check if user created
       const [user] = await Promise.all([
