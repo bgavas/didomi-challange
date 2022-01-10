@@ -1,4 +1,4 @@
-import { Body, Get, JsonController, Param, Post } from 'routing-controllers';
+import { Body, Delete, Get, JsonController, Param, Post } from 'routing-controllers';
 import { OpenAPI } from 'routing-controllers-openapi';
 import { Service } from 'typedi';
 import { User } from '../../db/entities/user.entity';
@@ -30,5 +30,12 @@ export class UserController {
   @Get('/')
   async getUsers(): Promise<User[]> {
     return this.userService.getUsers();
+  }
+
+  @Delete('/:id')
+  async deleteUser(
+    @Param('id') id: string,
+  ): Promise<User> {
+    return this.userService.deleteUserById(id);
   }
 }

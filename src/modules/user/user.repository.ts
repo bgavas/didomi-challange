@@ -25,4 +25,10 @@ export class UserRepository extends Repository<User> {
       .leftJoinAndSelect('u.consents', 'c')
       .getMany();
   }
+
+  async deleteUser(user: User): Promise<User> {
+    const persistentUser = JSON.parse(JSON.stringify(user));
+    await user.remove();
+    return persistentUser;
+  }
 }
