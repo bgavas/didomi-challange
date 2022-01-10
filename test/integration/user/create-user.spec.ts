@@ -22,12 +22,12 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await getConnection().close();
+  appServer.getServer().close();
 });
 
 beforeEach(async () => {
   await seed.clearTables();
   await seed.populateTables();
-  appServer.getServer().close();
 });
 
 describe('User', () => {
@@ -53,7 +53,7 @@ describe('User', () => {
         }),
       ]);
 
-      if (!user) throw new Error('User not saved to the DB');
+      expect(user).toBeTruthy();
     });
 
     it('should not create a user if email is malformed', async () => {

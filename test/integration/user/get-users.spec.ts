@@ -20,12 +20,12 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await getConnection().close();
+  appServer.getServer().close();
 });
 
 beforeEach(async () => {
   await seed.clearTables();
   await seed.populateTables();
-  appServer.getServer().close();
 });
 
 describe('User', () => {

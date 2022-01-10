@@ -23,12 +23,12 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await getConnection().close();
+  appServer.getServer().close();
 });
 
 beforeEach(async () => {
   await seed.clearTables();
   await seed.populateTables();
-  appServer.getServer().close();
 });
 
 describe('User', () => {
@@ -47,7 +47,7 @@ describe('User', () => {
         }),
       ]);
 
-      if (user) throw new Error('User not deleted from the DB');
+      expect(user).toBeFalsy();
     });
 
     it('should not delete a user if user not found', async () => {

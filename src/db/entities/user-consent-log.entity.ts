@@ -24,14 +24,14 @@ export class UserConsentLog extends BaseEntity {
 
   @Index()
   @Column()
-  userId: number;
+  userId: string;
 
   @ManyToOne(_ => Consent, consent => consent.consents, { onDelete: 'CASCADE' })
   consent: Consent;
 
   @Index()
   @Column()
-  consentId: number;
+  consentId: string;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

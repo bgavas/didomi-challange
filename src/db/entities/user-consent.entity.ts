@@ -22,12 +22,12 @@ export class UserConsent extends BaseEntity {
 
   @Index()
   @Column()
-  userId: number;
+  userId: string;
 
   @ManyToOne(_ => Consent, consent => consent.consents, { onDelete: 'CASCADE' })
   consent: Consent;
 
   @Index()
   @Column()
-  consentId: number;
+  consentId: string;
 }

@@ -14,7 +14,7 @@ export class EventController {
   ) {}
 
   @Post('/consents')
-  async createEvent(
+  async createConsentEvent(
     @Body() dto: CreateConsentEventDto,
   ): Promise<User> {
     return this.eventService.createConsentEvent(dto);
