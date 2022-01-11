@@ -3,7 +3,6 @@ import { Container } from 'typedi';
 import { getConnection } from 'typeorm';
 import { v4 } from 'uuid';
 import { User } from '../../../src/db/entities/user.entity';
-import { CreateUserDto } from '../../../src/modules/user/dto/create-user.dto';
 import { AppServer } from '../../../src/server';
 import { errors } from '../../../src/utils/errors';
 import { createDbConnection } from '../helper';
