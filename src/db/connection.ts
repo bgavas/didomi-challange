@@ -13,19 +13,15 @@ if (process.env.NODE_ENV !== Environment.Test) {
     username: TYPEORM.USERNAME,
     password: TYPEORM.PASSWORD,
     database: TYPEORM.DATABASE,
-    synchronize: true,
+    synchronize: false,
     logging: false,
     ssl: TYPEORM.SSL,
     entities: [
       `${__dirname}/entities/**/*.{ts,js}`,
     ],
     migrations: [
-      `${__dirname}/migrations/**/*.{ts,js}`,
+      `${__dirname}/migrations/*.{ts,js}`,
     ],
-    cli: {
-      entitiesDir: `${__dirname}/entities`,
-      migrationsDir: `${__dirname}/migrations`,
-    },
     extra: {
       ...(
         TYPEORM.SSL ? {
