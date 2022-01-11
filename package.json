@@ -15,7 +15,8 @@
     "test": "jest",
     "test:cov": "jest --collect-coverage",
     "lint": "tslint -p tsconfig.json -c tslint.json",
-    "migrate": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run"
+    "migrate": "ts-node --transpile-only ./node_modules/typeorm/cli.js migration:run",
+    "migrate:gen": "typeorm migration:generate -n CreateInitialTables"
   },
   "dependencies": {
     "class-transformer": "^0.5.1",

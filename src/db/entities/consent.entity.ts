@@ -1,8 +1,10 @@
 import {
   BaseEntity,
+  CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { UserConsent } from './user-consent.entity';
 
@@ -13,4 +15,10 @@ export class Consent extends BaseEntity {
 
   @OneToMany(_ => UserConsent, c => c.consent)
   consents: UserConsent[];
+
+  @CreateDateColumn({ type: 'timestamptz' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamptz' })
+  updatedAt: Date;
 }
