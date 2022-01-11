@@ -10,7 +10,7 @@ export const createDbConnection = async (): Promise<Connection> => {
     password: TYPEORM.PASSWORD,
     database: TYPEORM.DATABASE,
     synchronize: true,
-    logging: true,
+    logging: false,
     entities: [
       `${__dirname}/../../src/db/entities/**/*.{ts,js}`,
     ],
